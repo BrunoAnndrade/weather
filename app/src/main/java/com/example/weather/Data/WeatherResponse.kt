@@ -1,23 +1,26 @@
 package com.example.weather.Data
 
-
-
-data class Weather (
+data class WeatherResponse(
+    val lat: Double,
+    val lon: Double,
+    val timezone: String,
     val timezoneOffset: Long,
-    val current: Current,
-    val hourly: List<Current>,
-    val daily: List<Daily>,
+    val current:List<CurrentDto>,
+    val weatherElement:WeatherElementDto,
+    val daily:Daily,
+    val temp:Temp
 )
-data class Current (
+
+data class CurrentDto (
     val dt: Long,
     val temp: Double,
     val humidity: Long,
-    val windSpeed: Double,
-    val weather: List<WeatherElement>,
+    val wind_speed: Double,
+    val weather: List<WeatherElementDto>,
 
-)
+    )
 
-data class WeatherElement (
+data class WeatherElementDto (
     val id: Long,
     val main: String,
     val description: String,
@@ -27,7 +30,7 @@ data class WeatherElement (
 data class Daily (
     val dt: Long,
     val temp: Temp,
-    val weather: List<WeatherElement>,
+    val weather: List<WeatherElementDto>,
 )
 
 data class Temp (
@@ -38,5 +41,7 @@ data class Temp (
     val eve: Double,
     val morn: Double
 )
+
+
 
 

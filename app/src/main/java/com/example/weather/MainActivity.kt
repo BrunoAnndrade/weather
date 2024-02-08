@@ -29,6 +29,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -46,11 +49,13 @@ import com.example.weather.ui.theme.WeatherTheme
 import kotlin.math.round
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WeatherTheme {
-
+                Greeting()
             }
         }
     }
@@ -59,6 +64,12 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Greeting() {
+
+    val viewModel by lazy {
+        WeatherViewModel.create()
+    }
+    val weatherData = viewModel.weatherLiveData.observeAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -66,7 +77,6 @@ fun Greeting() {
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = Color.Black
                 ),
-
                 title = {
                     Text(
                         text = "Weather",
@@ -74,7 +84,6 @@ fun Greeting() {
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White,
                     )
-
                 })
         },
 
@@ -103,7 +112,6 @@ fun Greeting() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth()
 
-
                 ) {
                     Text(
                         text = "Brasil",
@@ -111,22 +119,23 @@ fun Greeting() {
                         style = TextStyle.Default.copy(
                             Color.White,
                         )
-
                     )
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
 
                     ) {
+
                         Text(
-                            text = "25ºC",
+                            text = weatherData.value.toString(),
                             fontSize = 100.sp,
                             modifier = Modifier,
                             style = TextStyle.Default.copy(
                                 Color.White,
                                 fontWeight = FontWeight.ExtraBold
 
-                            )
+                            ),
                         )
                         Spacer(modifier = Modifier.width(15.dp))
                         Image(
@@ -146,9 +155,7 @@ fun Greeting() {
                         style = TextStyle.Default.copy(
                             Color.White,
                         )
-
                     )
-
                 }
             }
 

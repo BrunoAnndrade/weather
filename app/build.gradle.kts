@@ -19,19 +19,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         //SALVAR API KEY NO LOCAL DO PC
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        buildConfigField "String", "API_KEY", "\"${properties.getProperty('API_KEY')}\""
-
-
-
+        val properties = Properties()
+        properties.load(file(rootProject.file("local.properties")).inputStream())
+        buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
 
 
         vectorDrawables {
             useSupportLibrary = true
         }
-
-
     }
 
     buildTypes {
@@ -52,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -61,7 +57,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
 }
 
 dependencies {
@@ -85,6 +80,9 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
 
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
 
 
 
