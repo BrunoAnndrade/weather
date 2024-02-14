@@ -21,7 +21,7 @@ object RetrofitModule {
 
             val retrofit = Retrofit
                 .Builder()
-                .baseUrl("https://api.openweathermap.org/data/3.0/")
+                .baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create(Gson()))
                 .client(client)
 
