@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.weather.ui.theme.WeatherTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,9 +57,14 @@ fun Greeting() {
         WeatherViewModel.create()
     }
 
-    val weatherState = viewModel.weatherLiveData.observeAsState()
+    val MainState = viewModel.MainLiveData.observeAsState()
+    val WeatherState = viewModel.WeatherLiveData.observeAsState()
+    val temperatura = MainState.value?.temp
+    val iconeTemp = WeatherState.value?.firstOrNull()?.icon
+    val descricaoTemp = WeatherState.value?.firstOrNull()?.description
 
-    val temperatura = weatherState.value?.firstOrNull()?.main?.temp
+
+
 
 
     Scaffold(
@@ -105,7 +111,7 @@ fun Greeting() {
 
                 ) {
                     Text(
-                        text = "Brasil",
+                        text = "Cabedelo",
                         fontSize = 50.sp,
                         style = TextStyle.Default.copy(
                             Color.White,
@@ -140,19 +146,21 @@ fun Greeting() {
                             ),
                         )}
                         Spacer(modifier = Modifier.width(15.dp))
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
-                            contentDescription = "sol",
+
+                        AsyncImage(
+                            model = "https://openweathermap.org/img/wn/$iconeTemp@2x.png",
+                            contentDescription = null,
                             modifier = Modifier
                                 .width(100.dp)
                                 .height(100.dp)
                                 .align(alignment = CenterVertically)
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Black, CircleShape)
+
                         )
                     }
                     Text(
-                        text = "Ensolarado",
+                        text = descricaoTemp.toString(),
                         fontSize = 30.sp,
                         style = TextStyle.Default.copy(
                             Color.White,

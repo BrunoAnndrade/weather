@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.CurrentDto
+
 import com.example.weather.Data.RetrofitModule
 
 import com.example.weather.Data.WeatherService
+import com.example.weather.Data.model.Main
+import com.example.weather.Data.model.Weather
+import com.example.weather.Data.model.WeatherResponse
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -16,8 +19,14 @@ class WeatherViewModel(
 
 ) :ViewModel(){
 
-    private val _weatherLiveData = MutableLiveData<List<CurrentDto>>()
-    val weatherLiveData:LiveData<List<CurrentDto>> = _weatherLiveData
+    private val _MainLiveData = MutableLiveData<Main>()
+    val MainLiveData:LiveData<Main> = _MainLiveData
+
+    private val _nameLiveData = MutableLiveData<WeatherResponse>()
+    val nameLiveData:LiveData<WeatherResponse> = _nameLiveData
+
+    private val _WeatherLiveData = MutableLiveData<List<Weather>>()
+    val WeatherLiveData:LiveData<List<Weather>> = _WeatherLiveData
 
     init {
         getWeather()
@@ -27,8 +36,11 @@ class WeatherViewModel(
             try {
                 val lat = -6.98021
                 val lon = -34.8304
-                val weather = weatherService.fetchWeather(lat,lon).current
-                _weatherLiveData.value = weather
+                val weatherResponse = weatherService.fetchWeather(lat,lon)
+                _MainLiveData.value = weatherResponse.main
+                _WeatherLiveData.value = weatherResponse.weather
+
+
 
             } catch (ex: Exception){
                 ex.printStackTrace()
