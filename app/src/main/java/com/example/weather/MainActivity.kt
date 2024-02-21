@@ -36,7 +36,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.weather.Data.Forecast.ForecastViewModel
 import com.example.weather.ui.theme.WeatherTheme
+import java.time.DayOfWeek
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,15 +55,51 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting() {
 
-    val viewModel by lazy {
+    val viewModelWeather by lazy {
         WeatherViewModel.create()
+
+    }
+    val viewModelForecast by lazy {
+        ForecastViewModel.create()
     }
 
-    val MainState = viewModel.MainLiveData.observeAsState()
-    val WeatherState = viewModel.WeatherLiveData.observeAsState()
+    val MainState = viewModelWeather.MainLiveData.observeAsState()
+    val WeatherState = viewModelWeather.WeatherLiveData.observeAsState()
     val temperatura = MainState.value?.temp
     val iconeTemp = WeatherState.value?.firstOrNull()?.icon
     val descricaoTemp = WeatherState.value?.firstOrNull()?.description
+
+    val CityState = viewModelForecast.CityLiveData.observeAsState()
+    val city = CityState.value?.name
+
+
+    val dataState = viewModelForecast.ListElementLiveData.observeAsState()
+
+    //Dia 1
+    val tempMinForDayOne = dataState.value?.get(2)?.main?.temp_min
+    val tempMaxForDayOne = dataState.value?.get(2)?.main?.temp_max
+    val iconTempForDayOne = dataState.value?.get(2)?.weather?.firstOrNull()?.icon
+    val dataForDayOne = dataState.value?.get(2)?.dt_txt
+
+    //Dia 2
+    val tempMinForDayTwo = dataState.value?.get(10)?.main?.temp_min
+    val tempMaxForDayTwo = dataState.value?.get(10)?.main?.temp_max
+    val iconTempForDayTwo = dataState.value?.get(10)?.weather?.firstOrNull()?.icon
+    val dataForDayTwo = dataState.value?.get(10)?.dt_txt
+
+    //Dia 3
+    val tempMinForDayThree = dataState.value?.get(18)?.main?.temp_min
+    val tempMaxForDayThree = dataState.value?.get(18)?.main?.temp_max
+    val iconTempForDayThree = dataState.value?.get(18)?.weather?.firstOrNull()?.icon
+    val dataForDayThree = dataState.value?.get(18)?.dt_txt
+
+    //Dia 4
+    val tempMinForDayFour = dataState.value?.get(26)?.main?.temp_min
+    val tempMaxForDayFour = dataState.value?.get(26)?.main?.temp_max
+    val iconTempForDayFour = dataState.value?.get(26)?.weather?.firstOrNull()?.icon
+    val dataForDayFour = dataState.value?.get(26)?.dt_txt
+
+
 
 
 
@@ -111,7 +149,7 @@ fun Greeting() {
 
                 ) {
                     Text(
-                        text = "Cabedelo",
+                        text = city.toString(),
                         fontSize = 50.sp,
                         style = TextStyle.Default.copy(
                             Color.White,
@@ -126,7 +164,7 @@ fun Greeting() {
 
                         if (temperatura != null) {
                             Text(
-                                text = temperatura.toInt().toString()+"ºC",
+                                text = temperatura.toInt().toString() + "ºC",
                                 fontSize = 100.sp,
                                 modifier = Modifier,
                                 style = TextStyle.Default.copy(
@@ -135,16 +173,18 @@ fun Greeting() {
 
                                 ),
                             )
-                        } else { Text(
-                            text = "",
-                            fontSize = 100.sp,
-                            modifier = Modifier,
-                            style = TextStyle.Default.copy(
-                                Color.White,
-                                fontWeight = FontWeight.ExtraBold
+                        } else {
+                            Text(
+                                text = "",
+                                fontSize = 100.sp,
+                                modifier = Modifier,
+                                style = TextStyle.Default.copy(
+                                    Color.White,
+                                    fontWeight = FontWeight.ExtraBold
 
-                            ),
-                        )}
+                                ),
+                            )
+                        }
                         Spacer(modifier = Modifier.width(15.dp))
 
                         AsyncImage(
@@ -190,6 +230,7 @@ fun Greeting() {
                                 Color.White,
                             )
                         )
+
                         Image(
                             painter = painterResource(id = R.drawable.sun),
                             contentDescription = "sol",
@@ -332,12 +373,15 @@ fun Greeting() {
                         horizontalArrangement = Arrangement.spacedBy(70.dp),
                         verticalAlignment = CenterVertically
                     ) {
+
                         Text(
-                            text = "Sab.",
+                            text = viewModelForecast.getDayOfTheWeek(dataForDayOne.toString()),
                             modifier = Modifier.width(40.dp)
                         )
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
+
+                        AsyncImage(
+                            model =
+                            "https://openweathermap.org/img/wn/$iconTempForDayOne@2x.png",
                             contentDescription = "sol",
                             modifier = Modifier
                                 .width(30.dp)
@@ -345,14 +389,15 @@ fun Greeting() {
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Black, CircleShape)
                         )
+
+
                         Text(
-                            text = "-27ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
+                            text = tempMinForDayOne.toString().take(2)+"º" ,
+                            modifier = Modifier.width(40.dp)
                         )
+
                         Text(
-                            text = "-19ºC",
+                            text = tempMaxForDayOne.toString().take(2)+"º",
                             style = TextStyle.Default.copy(
                                 Color.Black,
                             )
@@ -364,7 +409,7 @@ fun Greeting() {
                         verticalAlignment = CenterVertically
                     ) {
                         Text(
-                            text = "Dom.",
+                            text = "Ter.",
                             modifier = Modifier.width(40.dp)
                         )
                         Image(
@@ -376,7 +421,7 @@ fun Greeting() {
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Black, CircleShape),
 
-                        )
+                            )
                         Text(
                             text = "-27ºC",
                             style = TextStyle.Default.copy(

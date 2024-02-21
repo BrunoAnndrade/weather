@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.weather.Data.RetrofitModule
 
 import com.example.weather.Data.WeatherService
-import com.example.weather.Data.model.Main
-import com.example.weather.Data.model.Weather
-import com.example.weather.Data.model.WeatherResponse
+import com.example.weather.Data.Weather.Main
+import com.example.weather.Data.Weather.Weather
+import com.example.weather.Data.Weather.WeatherResponse
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
