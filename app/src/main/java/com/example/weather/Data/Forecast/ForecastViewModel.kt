@@ -60,13 +60,13 @@ class ForecastViewModel(
                 val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
 
                 return when (dayOfWeek) {
-                    1 -> "Dom."
-                    2 -> "Seg."
-                    3 -> "Ter."
-                    4 -> "Qua."
-                    5 -> "Qui."
-                    6 -> "Sex."
-                    7 -> "Sáb."
+                    1 -> "Dom"
+                    2 -> "Seg"
+                    3 -> "Ter"
+                    4 -> "Qua"
+                    5 -> "Qui"
+                    6 -> "Sex"
+                    7 -> "Sáb"
                     else -> "Dia inválido"
                 }
             } else {

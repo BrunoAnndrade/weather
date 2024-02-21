@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weather.Data.Forecast.ForecastViewModel
 import com.example.weather.ui.theme.WeatherTheme
-import java.time.DayOfWeek
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,35 +75,29 @@ fun Greeting() {
 
     val dataState = viewModelForecast.ListElementLiveData.observeAsState()
 
-    //Dia 1
+    //previsao dia 1
     val tempMinForDayOne = dataState.value?.get(2)?.main?.temp_min
     val tempMaxForDayOne = dataState.value?.get(2)?.main?.temp_max
     val iconTempForDayOne = dataState.value?.get(2)?.weather?.firstOrNull()?.icon
     val dataForDayOne = dataState.value?.get(2)?.dt_txt
 
-    //Dia 2
+    //Previsao Dia 2
     val tempMinForDayTwo = dataState.value?.get(10)?.main?.temp_min
     val tempMaxForDayTwo = dataState.value?.get(10)?.main?.temp_max
     val iconTempForDayTwo = dataState.value?.get(10)?.weather?.firstOrNull()?.icon
     val dataForDayTwo = dataState.value?.get(10)?.dt_txt
 
-    //Dia 3
+    //Previsao Dia 3
     val tempMinForDayThree = dataState.value?.get(18)?.main?.temp_min
     val tempMaxForDayThree = dataState.value?.get(18)?.main?.temp_max
     val iconTempForDayThree = dataState.value?.get(18)?.weather?.firstOrNull()?.icon
     val dataForDayThree = dataState.value?.get(18)?.dt_txt
 
-    //Dia 4
+    //Previsao Dia 4
     val tempMinForDayFour = dataState.value?.get(26)?.main?.temp_min
     val tempMaxForDayFour = dataState.value?.get(26)?.main?.temp_max
     val iconTempForDayFour = dataState.value?.get(26)?.weather?.firstOrNull()?.icon
     val dataForDayFour = dataState.value?.get(26)?.dt_txt
-
-
-
-
-
-
 
     Scaffold(
         topBar = {
@@ -366,7 +360,9 @@ fun Greeting() {
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     Text(
-                        text = "Previsao para 10 dias"
+                        text = "Previsao para os próximos dias",
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+
                     )
 
                     Row(
@@ -409,27 +405,27 @@ fun Greeting() {
                         verticalAlignment = CenterVertically
                     ) {
                         Text(
-                            text = "Ter.",
+                            text = viewModelForecast.getDayOfTheWeek(dataForDayTwo.toString()),
                             modifier = Modifier.width(40.dp)
                         )
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
-                            contentDescription = "sol",
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                                .clip(CircleShape)
-                                .border(2.dp, Color.Black, CircleShape),
 
-                            )
+                        AsyncImage(
+                            model =
+                            "https://openweathermap.org/img/wn/$iconTempForDayTwo@2x.png",
+                            contentDescription = "sol",
+                            modifier = Modifier
+                                .width(30.dp)
+                                .height(30.dp)
+                                .clip(CircleShape)
+                                .border(2.dp, Color.Black, CircleShape)
+                        )
+
                         Text(
-                            text = "-27ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
+                            text = tempMinForDayTwo.toString().take(2)+"º" ,
+                            modifier = Modifier.width(40.dp)
                         )
                         Text(
-                            text = "-19ºC",
+                            text = tempMaxForDayTwo.toString().take(2)+"º",
                             style = TextStyle.Default.copy(
                                 Color.Black,
                             )
@@ -440,11 +436,13 @@ fun Greeting() {
                         verticalAlignment = CenterVertically
                     ) {
                         Text(
-                            text = "Seg.",
+                            text = viewModelForecast.getDayOfTheWeek(dataForDayThree.toString()),
                             modifier = Modifier.width(40.dp)
                         )
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
+
+                        AsyncImage (
+                            model =
+                            "https://openweathermap.org/img/wn/$iconTempForDayThree@2x.png",
                             contentDescription = "sol",
                             modifier = Modifier
                                 .width(30.dp)
@@ -452,29 +450,32 @@ fun Greeting() {
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Black, CircleShape)
                         )
+
                         Text(
-                            text = "-27ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
+                            text = tempMinForDayThree.toString().take(2)+"º" ,
+                            modifier = Modifier.width(40.dp)
                         )
+
                         Text(
-                            text = "-19ºC",
+                            text = tempMaxForDayThree.toString().take(2)+"º",
                             style = TextStyle.Default.copy(
                                 Color.Black,
                             )
                         )
                     }
+
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(70.dp),
                         verticalAlignment = CenterVertically
                     ) {
                         Text(
-                            text = "Seg.",
+                            text = viewModelForecast.getDayOfTheWeek(dataForDayFour.toString()),
                             modifier = Modifier.width(40.dp)
                         )
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
+
+                        AsyncImage(
+                            model =
+                            "https://openweathermap.org/img/wn/$iconTempForDayFour@2x.png",
                             contentDescription = "sol",
                             modifier = Modifier
                                 .width(30.dp)
@@ -482,44 +483,15 @@ fun Greeting() {
                                 .clip(CircleShape)
                                 .border(2.dp, Color.Black, CircleShape)
                         )
+
+
                         Text(
-                            text = "-27ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
-                        )
-                        Text(
-                            text = "-19ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
-                        )
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(70.dp),
-                        verticalAlignment = CenterVertically
-                    ) {
-                        Text(
-                            text = "Ter.",
+                            text = tempMinForDayFour.toString().take(2)+"º" ,
                             modifier = Modifier.width(40.dp)
                         )
-                        Image(
-                            painter = painterResource(id = R.drawable.sun),
-                            contentDescription = "sol",
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                                .clip(CircleShape)
-                                .border(2.dp, Color.Black, CircleShape)
-                        )
+
                         Text(
-                            text = "-27ºC",
-                            style = TextStyle.Default.copy(
-                                Color.Black,
-                            )
-                        )
-                        Text(
-                            text = "-19ºC",
+                            text = tempMaxForDayFour.toString().take(2)+"º",
                             style = TextStyle.Default.copy(
                                 Color.Black,
                             )
