@@ -1,8 +1,6 @@
-package com.example.weather.Data
+package com.example.weather.Data.Remote
 
 import com.example.weather.BuildConfig
-import com.example.weather.Data.Forecast.ForecastResponse
-import com.example.weather.Data.Weather.WeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

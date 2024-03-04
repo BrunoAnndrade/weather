@@ -1,12 +1,4 @@
-package com.example.weather.Data.Forecast
-
-data class ForecastResponse(
-    val city: City,
-    val cnt: Int,
-    val cod: String,
-    val list: List<ListElement>,
-    val message: Int
-)
+package com.example.weather.Data.Remote.ForeCastModel
 
 data class ListElement(
     val clouds: Clouds,

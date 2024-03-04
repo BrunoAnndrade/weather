@@ -1,16 +1,18 @@
-package com.example.weather.Data.Forecast
+package com.example.weather.Presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.RetrofitModule
-import com.example.weather.Data.WeatherService
+import com.example.weather.Data.Remote.ForeCastModel.City
+import com.example.weather.Data.Remote.ForeCastModel.ListElement
+
+import com.example.weather.Data.Remote.RetrofitModule
+import com.example.weather.Data.Remote.WeatherService
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class ForecastViewModel(

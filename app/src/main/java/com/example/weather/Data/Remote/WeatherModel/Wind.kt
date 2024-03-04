@@ -1,4 +1,4 @@
-package com.example.weather.Data.Weather
+package com.example.weather.Data.Remote.WeatherModel
 
 data class Wind(
     val deg: Int,

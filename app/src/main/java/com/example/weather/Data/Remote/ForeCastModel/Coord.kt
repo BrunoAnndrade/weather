@@ -1,4 +1,4 @@
-package com.example.weather.Data.Forecast
+package com.example.weather.Data.Remote.ForeCastModel
 
 data class Coord(
     val lat: Double,

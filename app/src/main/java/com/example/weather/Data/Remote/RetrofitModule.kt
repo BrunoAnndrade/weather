@@ -1,4 +1,4 @@
-package com.example.weather.Data
+package com.example.weather.Data.Remote
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
 
-        fun createWeatherService():WeatherService{
+        fun createWeatherService(): WeatherService {
 
             val logging = HttpLoggingInterceptor()
             logging.apply {
