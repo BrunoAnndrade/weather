@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.Remote.ForeCastModel.City
-import com.example.weather.Data.Remote.ForeCastModel.ListElement
+import com.example.weather.Data.Remote.CityForecastDTO
+import com.example.weather.Data.Remote.ListWeatherElementDTO
+
 
 import com.example.weather.Data.Remote.RetrofitModule
 import com.example.weather.Data.Remote.WeatherService
@@ -19,12 +20,11 @@ class ForecastViewModel(
     private val weatherService: WeatherService
 ) : ViewModel() {
 
-    private val _CityLiveData = MutableLiveData<City>()
-    val CityLiveData: LiveData<City> = _CityLiveData
+    private val _CityLiveData = MutableLiveData<CityForecastDTO>()
+    val CityLiveData: LiveData<CityForecastDTO> = _CityLiveData
 
-    private val _ListElementLiveData = MutableLiveData<List<ListElement>>()
-    val ListElementLiveData: LiveData<List<ListElement>> = _ListElementLiveData
-
+    private val _ListElementLiveData = MutableLiveData<List<ListWeatherElementDTO>>()
+    val ListElementLiveData: LiveData<List<ListWeatherElementDTO>> = _ListElementLiveData
 
 
     init {
@@ -41,7 +41,6 @@ class ForecastViewModel(
 
                 _CityLiveData.value = forecastResponse.city
                 _ListElementLiveData.value = forecastResponse.list
-
 
 
             } catch (ex: Exception) {

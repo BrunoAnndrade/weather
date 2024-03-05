@@ -1,19 +1,21 @@
 package com.example.weather.Data.Remote
 
-import com.example.weather.Data.Remote.ForeCastModel.City
-import com.example.weather.Data.Remote.ForeCastModel.Clouds
-import com.example.weather.Data.Remote.ForeCastModel.ListElement
-import com.example.weather.Data.Remote.ForeCastModel.Main
-import com.example.weather.Data.Remote.ForeCastModel.Rain
-import com.example.weather.Data.Remote.ForeCastModel.Sys
-import com.example.weather.Data.Remote.ForeCastModel.Weather
-import com.example.weather.Data.Remote.ForeCastModel.Wind
-
 data class ForecastResponse(
-    val city: City,
-    val cnt: Int,
-    val cod: String,
-    val list: List<ListElement>,
-    val message: Int
+    val city: CityForecastDTO,
+    val list: List<ListWeatherElementDTO>,
+)
+
+data class CityForecastDTO(
+    val id:Int,
+    val name:String
+)
+data class WeatherDTO(
+    val description: String,
+    val icon: String,
+    val id: Int,
+    val main: String
+)
+data class WindDTO(
+    val speed: Double
 )
 
