@@ -66,11 +66,12 @@ fun WeatherScreen() {
         ForecastViewModel.create()
     }
 
+
     val mainState = viewModelWeather.MainLiveData.observeAsState()
     val weatherState = viewModelWeather.WeatherLiveData.observeAsState()
     val windState = viewModelWeather.WindSpeedLiveData.observeAsState()
     val mainTemp = mainState.value?.temp
-    val icontemp = weatherState.value?.firstOrNull()?.icon
+    val iconTemp = weatherState.value?.firstOrNull()?.icon
     val descriptionTemp = weatherState.value?.firstOrNull()?.description
     val mainTempMin = mainState.value?.temp_min
     val mainTempMax = mainState.value?.temp_max
@@ -84,29 +85,35 @@ fun WeatherScreen() {
 
     val forecastForDayState = viewModelForecast.ListElementLiveData.observeAsState()
 
-    //previsao dia 1
-    val tempMinForDayOne = forecastForDayState.value?.get(2)?.main?.temp_min
-    val tempMaxForDayOne = forecastForDayState.value?.get(2)?.main?.temp_max
-    val iconTempForDayOne = forecastForDayState.value?.get(2)?.weather?.firstOrNull()?.icon
-    val dataForDayOne = forecastForDayState.value?.get(2)?.dt_txt
 
-    //Previsao Dia 2
-    val tempMinForDayTwo = forecastForDayState.value?.get(10)?.main?.temp_min
-    val tempMaxForDayTwo = forecastForDayState.value?.get(10)?.main?.temp_max
-    val iconTempForDayTwo = forecastForDayState.value?.get(10)?.weather?.firstOrNull()?.icon
-    val dataForDayTwo = forecastForDayState.value?.get(10)?.dt_txt
+    // each array has 3 hours of differences in API
+    // 1 day later
+    val oneDayLater = 2
+    val tempMinForDayOne = forecastForDayState.value?.get(oneDayLater)?.main?.temp_min
+    val tempMaxForDayOne = forecastForDayState.value?.get(oneDayLater)?.main?.temp_max
+    val iconTempForDayOne = forecastForDayState.value?.get(oneDayLater)?.weather?.firstOrNull()?.icon
+    val dataForDayOne = forecastForDayState.value?.get(oneDayLater)?.dt_txt
 
-    //Previsao Dia 3
-    val tempMinForDayThree = forecastForDayState.value?.get(18)?.main?.temp_min
-    val tempMaxForDayThree = forecastForDayState.value?.get(18)?.main?.temp_max
-    val iconTempForDayThree = forecastForDayState.value?.get(18)?.weather?.firstOrNull()?.icon
-    val dataForDayThree = forecastForDayState.value?.get(18)?.dt_txt
+    // 2 days later
+    val twoDayLater = 10
+    val tempMinForDayTwo = forecastForDayState.value?.get(twoDayLater)?.main?.temp_min
+    val tempMaxForDayTwo = forecastForDayState.value?.get(twoDayLater)?.main?.temp_max
+    val iconTempForDayTwo = forecastForDayState.value?.get(twoDayLater)?.weather?.firstOrNull()?.icon
+    val dataForDayTwo = forecastForDayState.value?.get(twoDayLater)?.dt_txt
 
-    //Previsao Dia 4
-    val tempMinForDayFour = forecastForDayState.value?.get(26)?.main?.temp_min
-    val tempMaxForDayFour = forecastForDayState.value?.get(26)?.main?.temp_max
-    val iconTempForDayFour = forecastForDayState.value?.get(26)?.weather?.firstOrNull()?.icon
-    val dataForDayFour = forecastForDayState.value?.get(26)?.dt_txt
+    // 3 days later
+    val threeDayLater = 18
+    val tempMinForDayThree = forecastForDayState.value?.get(threeDayLater)?.main?.temp_min
+    val tempMaxForDayThree = forecastForDayState.value?.get(threeDayLater)?.main?.temp_max
+    val iconTempForDayThree = forecastForDayState.value?.get(threeDayLater)?.weather?.firstOrNull()?.icon
+    val dataForDayThree = forecastForDayState.value?.get(threeDayLater)?.dt_txt
+
+    // 4 days later
+    val fourDayLater = 26
+    val tempMinForDayFour = forecastForDayState.value?.get(fourDayLater)?.main?.temp_min
+    val tempMaxForDayFour = forecastForDayState.value?.get(fourDayLater)?.main?.temp_max
+    val iconTempForDayFour = forecastForDayState.value?.get(fourDayLater)?.weather?.firstOrNull()?.icon
+    val dataForDayFour = forecastForDayState.value?.get(fourDayLater)?.dt_txt
 
     Scaffold(
         topBar = {
@@ -172,7 +179,7 @@ fun WeatherScreen() {
                         )
 
                     AsyncImage(
-                        model = "https://openweathermap.org/img/wn/$icontemp@2x.png",
+                        model = "https://openweathermap.org/img/wn/$iconTemp@2x.png",
                         contentDescription = null,
                         modifier = Modifier
                             .width(200.dp)

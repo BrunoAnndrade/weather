@@ -49,18 +49,17 @@ class ForecastViewModel(
         }
     }
 
+
+    // Take date and transform it into a day of week
     fun getDayOfTheWeek(dtTxt: String): String {
         try {
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
             val date = sdf.parse(dtTxt)
 
-            // Verificar se a data não é nula
             if (date != null) {
                 val calendar = Calendar.getInstance()
                 calendar.time = date
-                val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-
-                return when (dayOfWeek) {
+                return when (calendar.get(Calendar.DAY_OF_WEEK)) {
                     1 -> "Dom"
                     2 -> "Seg"
                     3 -> "Ter"
