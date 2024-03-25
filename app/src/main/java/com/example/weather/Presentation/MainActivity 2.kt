@@ -75,8 +75,8 @@ fun WeatherScreen() {
     val weatherState = viewModelWeather.weatherLiveData.observeAsState()
     val windState = viewModelWeather.windSpeedLiveData.observeAsState()
     val mainTemp = mainState.value?.temp
-    val iconTemp = weatherState.value?.icon
-    val descriptionTemp = weatherState.value?.description
+    val iconTemp = weatherState.value?.firstOrNull()?.icon
+    val descriptionTemp = weatherState.value?.firstOrNull()?.description
     val mainTempMin = mainState.value?.temp_min
     val mainTempMax = mainState.value?.temp_max
     val feelsLike = mainState.value?.feels_like

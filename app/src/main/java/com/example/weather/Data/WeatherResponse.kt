@@ -4,7 +4,7 @@ package com.example.weather.Data
 data class WeatherResponse(
     val id: Int,
     val main: MainWeatherDTO,
-    val weather: WeatherDTO,
+    val weather: List<WeatherDTO>,
     val wind: WindDTO
 )
 
@@ -21,8 +21,6 @@ data class WeatherDTO(
     val main: String,
     val description: String,
     val icon: String,
-
-
 )
 
 data class ListWeatherElementDTO(

@@ -21,8 +21,8 @@ class WeatherViewModel(
     private val _mainLiveData = MutableLiveData<MainWeatherDTO>()
     val mainLiveData: LiveData<MainWeatherDTO> = _mainLiveData
 
-    private val _weatherLiveData = MutableLiveData<WeatherDTO>()
-    val weatherLiveData: LiveData<WeatherDTO> = _weatherLiveData
+    private val _weatherLiveData = MutableLiveData<List<WeatherDTO>>()
+    val weatherLiveData: LiveData<List<WeatherDTO>> = _weatherLiveData
 
     private val _windSpeedLiveData = MutableLiveData<WindDTO>()
     val windSpeedLiveData: LiveData<WindDTO> = _windSpeedLiveData
