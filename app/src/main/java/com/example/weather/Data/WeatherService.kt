@@ -1,4 +1,4 @@
-package com.example.weather.Data.Remote
+package com.example.weather.Data
 
 import com.example.weather.BuildConfig
 import retrofit2.http.GET

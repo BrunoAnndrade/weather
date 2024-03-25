@@ -1,4 +1,4 @@
-package com.example.weather.Data.Remote
+package com.example.weather.Data
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient

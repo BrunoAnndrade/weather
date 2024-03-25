@@ -1,4 +1,4 @@
-package com.example.weather.Data.Remote
+package com.example.weather.Data
 
 data class ForecastResponse(
     val city: CityForecastDTO,

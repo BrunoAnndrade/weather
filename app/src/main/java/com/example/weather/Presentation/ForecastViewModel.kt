@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.Remote.CityForecastDTO
-import com.example.weather.Data.Remote.ListWeatherElementDTO
-
-
-import com.example.weather.Data.Remote.RetrofitModule
-import com.example.weather.Data.Remote.WeatherService
+import com.example.weather.Data.CityForecastDTO
+import com.example.weather.Data.ListWeatherElementDTO
+import com.example.weather.Data.RetrofitModule
+import com.example.weather.Data.WeatherService
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -20,11 +18,11 @@ class ForecastViewModel(
     private val weatherService: WeatherService
 ) : ViewModel() {
 
-    private val _CityLiveData = MutableLiveData<CityForecastDTO>()
-    val CityLiveData: LiveData<CityForecastDTO> = _CityLiveData
+    private val _cityLiveData = MutableLiveData<CityForecastDTO>()
+    val cityLiveData: LiveData<CityForecastDTO> = _cityLiveData
 
-    private val _ListElementLiveData = MutableLiveData<List<ListWeatherElementDTO>>()
-    val ListElementLiveData: LiveData<List<ListWeatherElementDTO>> = _ListElementLiveData
+    private val _listElementLiveData = MutableLiveData<List<ListWeatherElementDTO>>()
+    val listElementLiveData: LiveData<List<ListWeatherElementDTO>> = _listElementLiveData
 
 
     init {
@@ -39,8 +37,8 @@ class ForecastViewModel(
                 val lon = -34.8304
                 val forecastResponse = weatherService.fetchForecast(lat, lon, 40)
 
-                _CityLiveData.value = forecastResponse.city
-                _ListElementLiveData.value = forecastResponse.list
+                _cityLiveData.value = forecastResponse.city
+                _listElementLiveData.value = forecastResponse.list
 
 
             } catch (ex: Exception) {

@@ -1,4 +1,4 @@
-package com.example.weather.Data.Remote
+package com.example.weather.Data
 
 
 data class WeatherResponse(
@@ -17,10 +17,11 @@ data class MainWeatherDTO(
 )
 
 data class WeatherDTO(
+    val id: Int,
+    val main: String,
     val description: String,
     val icon: String,
-    val id: Int,
-    val main: String
+
 
 )
 

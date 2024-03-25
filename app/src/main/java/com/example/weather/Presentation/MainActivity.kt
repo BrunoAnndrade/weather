@@ -1,7 +1,6 @@
 package com.example.weather.Presentation
 
-import android.app.Application
-import android.content.Context
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,29 +25,22 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.weather.R
 import com.example.weather.ui.theme.WeatherTheme
-
 
 class MainActivity : ComponentActivity() {
 
@@ -60,6 +50,8 @@ class MainActivity : ComponentActivity() {
             WeatherTheme {
 
                 WeatherScreen()
+
+
             }
         }
     }
@@ -70,7 +62,7 @@ class MainActivity : ComponentActivity() {
 fun WeatherScreen() {
 
 
-    val viewModelWeather:WeatherViewModel by lazy {
+    val viewModelWeather by lazy {
         WeatherViewModel.create()
     }
 
@@ -79,23 +71,23 @@ fun WeatherScreen() {
     }
 
 
-    val mainState = viewModelWeather.MainLiveData.observeAsState()
-    val weatherState = viewModelWeather.WeatherLiveData.observeAsState()
-    val windState = viewModelWeather.WindSpeedLiveData.observeAsState()
+    val mainState = viewModelWeather.mainLiveData.observeAsState()
+    val weatherState = viewModelWeather.weatherLiveData.observeAsState()
+    val windState = viewModelWeather.windSpeedLiveData.observeAsState()
     val mainTemp = mainState.value?.temp
-    val iconTemp = weatherState.value?.firstOrNull()?.icon
-    val descriptionTemp = weatherState.value?.firstOrNull()?.description
+    val iconTemp = weatherState.value?.icon
+    val descriptionTemp = weatherState.value?.description
     val mainTempMin = mainState.value?.temp_min
     val mainTempMax = mainState.value?.temp_max
     val feelsLike = mainState.value?.feels_like
     val humidity = mainState.value?.humidity
     val windSpeed = windState.value?.speed
 
-    val cityState = viewModelForecast.CityLiveData.observeAsState()
+    val cityState = viewModelForecast.cityLiveData.observeAsState()
     val city = cityState.value?.name
 
 
-    val forecastForDayState = viewModelForecast.ListElementLiveData.observeAsState()
+    val forecastForDayState = viewModelForecast.listElementLiveData.observeAsState()
 
 
     // each array has 3 hours of differences in API
