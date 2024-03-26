@@ -72,6 +72,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    val activity_version = "1.8.2"
+    implementation("androidx.activity:activity-ktx:$activity_version")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
     //Network
     val retrofitVersion = "2.9.0"
     val okHttpVersion = "4.12.0"
@@ -81,6 +85,10 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
 
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    implementation ("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
+
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.4")

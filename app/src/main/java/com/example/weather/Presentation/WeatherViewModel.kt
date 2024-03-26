@@ -1,6 +1,7 @@
 package com.example.weather.Presentation
 
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,12 +11,22 @@ import com.example.weather.Data.RetrofitModule
 import com.example.weather.Data.WeatherDTO
 import com.example.weather.Data.WeatherService
 import com.example.weather.Data.WindDTO
+
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class WeatherViewModel(
     private val weatherService: WeatherService
 ) : ViewModel() {
+
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+
+    fun updateLocation(latitude: Double, longitude: Double) {
+        this.latitude = latitude
+        this.longitude = longitude
+
+    }
 
 
     private val _mainLiveData = MutableLiveData<MainWeatherDTO>()
@@ -34,9 +45,8 @@ class WeatherViewModel(
     private fun getWeather() {
         viewModelScope.launch {
             try {
-                val lat = -6.98021
-                val lon = -34.8304
-                val weatherResponse = weatherService.fetchWeather(lat, lon)
+
+                val weatherResponse = weatherService.fetchWeather(latitude, longitude)
 
                 _mainLiveData.value = weatherResponse.main
                 _weatherLiveData.value = weatherResponse.weather
@@ -47,6 +57,9 @@ class WeatherViewModel(
             }
         }
     }
+
+
+
 
     companion object {
         fun create(): WeatherViewModel {
