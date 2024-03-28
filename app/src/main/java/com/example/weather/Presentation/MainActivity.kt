@@ -68,7 +68,7 @@ import com.google.android.gms.tasks.CancellationTokenSource
 class MainActivity : ComponentActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var viewModelWeather:WeatherViewModel
+
 
 
 
@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity() {
                                 // Attempt to get the current user location
                                 getCurrentLocation(
                                     onGetCurrentLocationSuccess = {
-                                        viewModelWeather.updateLocation(it.first,it.second)
+
                                         locationText =
                                             "Location using CURRENT-LOCATION: LATITUDE: ${it.first}, LONGITUDE: ${it.second}"
 

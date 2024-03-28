@@ -19,15 +19,6 @@ class WeatherViewModel(
     private val weatherService: WeatherService
 ) : ViewModel() {
 
-    private var latitude: Double = 0.0
-    private var longitude: Double = 0.0
-
-    fun updateLocation(latitude: Double, longitude: Double) {
-        this.latitude = latitude
-        this.longitude = longitude
-
-    }
-
 
     private val _mainLiveData = MutableLiveData<MainWeatherDTO>()
     val mainLiveData: LiveData<MainWeatherDTO> = _mainLiveData
@@ -45,6 +36,9 @@ class WeatherViewModel(
     private fun getWeather() {
         viewModelScope.launch {
             try {
+
+                val latitude = 0.0
+                val longitude = 0.0
 
                 val weatherResponse = weatherService.fetchWeather(latitude, longitude)
 
