@@ -3,6 +3,8 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -83,12 +85,19 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation ("com.squareup.okhttp3:okhttp:$okHttpVersion")
     implementation ("com.squareup.okhttp3:logging-interceptor:$okHttpVersion")
-
     implementation ("com.google.code.gson:gson:2.10.1")
 
+    //LOCATION
     implementation ("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.accompanist:accompanist-permissions:0.35.0-alpha")
 
+    //Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.49")
+    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.0.0-Beta5-1.0.19")
+    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    ksp ("com.google.dagger:dagger-compiler:2.51") // Dagger compiler
+    ksp ("com.google.dagger:hilt-compiler:2.51")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.4")

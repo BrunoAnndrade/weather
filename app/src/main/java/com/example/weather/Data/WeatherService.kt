@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface WeatherService {
 
-    //https://api.openweathermap.org/data/3.0/onecall
+    //https://api.openweathermap.org/data/2.5/
     @GET("weather?units=metric&lang=pt_br")
     suspend fun fetchWeather(
         @Query("lat") latitude:Double,
