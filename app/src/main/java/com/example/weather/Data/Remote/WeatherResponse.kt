@@ -1,4 +1,4 @@
-package com.example.weather.Data
+package com.example.weather.Data.Remote
 
 
 data class WeatherResponse(
@@ -23,10 +23,7 @@ data class WeatherDTO(
     val icon: String,
 )
 
-data class ListWeatherElementDTO(
-    val dt: Int,
-    val dt_txt: String,
-    val main: MainWeatherDTO,
-    val weather: List<WeatherDTO>,
+data class WindDTO(
+    val speed:Double
 )
 

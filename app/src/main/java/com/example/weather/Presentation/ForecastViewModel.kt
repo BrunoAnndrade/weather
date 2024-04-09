@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.CityForecastDTO
-import com.example.weather.Data.ListWeatherElementDTO
-import com.example.weather.Data.RetrofitModule
-import com.example.weather.Data.WeatherService
+import com.example.weather.Data.Remote.CityForecastDTO
+import com.example.weather.Data.Remote.ListWeatherElementDTO
+import com.example.weather.Data.Remote.RetrofitModule
+import com.example.weather.Data.Remote.WeatherApi
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -15,7 +15,7 @@ import java.util.Calendar
 import java.util.Locale
 
 class ForecastViewModel(
-    private val weatherService: WeatherService
+    private val weatherService: WeatherApi
 ) : ViewModel() {
 
     private val _cityLiveData = MutableLiveData<CityForecastDTO>()

@@ -3,7 +3,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+    id ("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
 }
 
@@ -93,14 +93,13 @@ dependencies {
 
     //Dagger - Hilt
     implementation ("com.google.dagger:hilt-android:2.49")
-    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.0.0-Beta5-1.0.19")
-    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
-    ksp ("com.google.dagger:dagger-compiler:2.51") // Dagger compiler
-    ksp ("com.google.dagger:hilt-compiler:2.51")
+    kapt ("com.google.dagger:hilt-android-compiler:2.48.1")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.5")
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
