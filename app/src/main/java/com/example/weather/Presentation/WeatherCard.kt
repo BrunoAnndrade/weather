@@ -46,9 +46,6 @@ fun WeatherScreen(
     state.weatherResponse?.main.let { data ->
 
 
-
-
-
         val viewModelForecast by lazy {
             ForecastViewModel.create()
         }

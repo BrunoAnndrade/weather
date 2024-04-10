@@ -36,7 +36,9 @@ class DefaultLocationTracker @Inject constructor(
         if(!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission || !isGpsEnabled) {
             return null
         }
-
+        /* Suspended function to retrieve the current device location asynchronously.
+         This function utilizes the FusedLocationProviderClient to fetch the last known
+         device location.*/
         return suspendCancellableCoroutine { cont ->
             locationClient.lastLocation.apply {
                 if(isComplete) {
