@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @ExperimentalCoroutinesApi
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+abstract class WeatherRepositoryModule {
 
     @Binds
     @Singleton

@@ -2,7 +2,7 @@ package com.example.weather.Data.Remote
 
 data class ForecastResponse(
     val city: CityForecastDTO,
-    val list: List<ListWeatherElementDTO>,
+    val list: List<ListForecastElementDTO>,
 )
 
 data class CityForecastDTO(
@@ -10,11 +10,19 @@ data class CityForecastDTO(
     val name:String
 )
 
-data class ListWeatherElementDTO(
+data class ListForecastElementDTO(
     val dt: Int,
     val dt_txt: String,
     val main: MainWeatherDTO,
-    val weather: List<WeatherDTO>,
+    val weather: ForecastWeatherDTO,
 )
+
+data class ForecastWeatherDTO(
+    val id: Int,
+    val main: String,
+    val description: String,
+    val icon: String,
+)
+
 
 

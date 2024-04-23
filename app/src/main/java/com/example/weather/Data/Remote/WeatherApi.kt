@@ -15,10 +15,10 @@ interface WeatherApi {
     ): WeatherResponse
 
     @GET("forecast?units=metric&lang=pt_br")
-    suspend fun fetchForecast(
+    suspend fun getForecastData(
         @Query("lat") latitude:Double,
         @Query("lon") longitude:Double,
-        @Query("cnt") count: Int,
+        @Query("cnt") count: Int = 40,
         @Query("appid") apiKey:String = BuildConfig.API_KEY
     ): ForecastResponse
 }

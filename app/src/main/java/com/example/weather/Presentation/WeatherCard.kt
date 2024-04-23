@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +35,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weather.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun WeatherScreen(
+fun WeatherCard(
     state: WeatherState
 
 ) {
@@ -46,428 +45,184 @@ fun WeatherScreen(
     state.weatherResponse?.main.let { data ->
 
 
-        val viewModelForecast by lazy {
-            ForecastViewModel.create()
-        }
-
-
-        val forecastForDayState = viewModelForecast.listElementLiveData.observeAsState()
-
-
-        // each array has 3 hours of differences in API
-        // 1 day later
-        val oneDayLater = 2
-        val tempMinForDayOne = forecastForDayState.value?.get(oneDayLater)?.main?.temp_min
-        val tempMaxForDayOne = forecastForDayState.value?.get(oneDayLater)?.main?.temp_max
-        val iconTempForDayOne =
-            forecastForDayState.value?.get(oneDayLater)?.weather?.firstOrNull()?.icon
-        val dataForDayOne = forecastForDayState.value?.get(oneDayLater)?.dt_txt
-
-        // 2 days later
-        val twoDayLater = 10
-        val tempMinForDayTwo = forecastForDayState.value?.get(twoDayLater)?.main?.temp_min
-        val tempMaxForDayTwo = forecastForDayState.value?.get(twoDayLater)?.main?.temp_max
-        val iconTempForDayTwo =
-            forecastForDayState.value?.get(twoDayLater)?.weather?.firstOrNull()?.icon
-        val dataForDayTwo = forecastForDayState.value?.get(twoDayLater)?.dt_txt
-
-        // 3 days later
-        val threeDayLater = 18
-        val tempMinForDayThree = forecastForDayState.value?.get(threeDayLater)?.main?.temp_min
-        val tempMaxForDayThree = forecastForDayState.value?.get(threeDayLater)?.main?.temp_max
-        val iconTempForDayThree =
-            forecastForDayState.value?.get(threeDayLater)?.weather?.firstOrNull()?.icon
-        val dataForDayThree = forecastForDayState.value?.get(threeDayLater)?.dt_txt
-
-        // 4 days later
-        val fourDayLater = 26
-        val tempMinForDayFour = forecastForDayState.value?.get(fourDayLater)?.main?.temp_min
-        val tempMaxForDayFour = forecastForDayState.value?.get(fourDayLater)?.main?.temp_max
-        val iconTempForDayFour =
-            forecastForDayState.value?.get(fourDayLater)?.weather?.firstOrNull()?.icon
-        val dataForDayFour = forecastForDayState.value?.get(fourDayLater)?.dt_txt
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-
-                    colors = TopAppBarDefaults.mediumTopAppBarColors(
-                        containerColor = Color.Black
-                    ), title = {
-                        Text(
-                            text = "Weather",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = Color.White,
+        Box(
+            modifier = Modifier
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Blue.copy(0.7f, 0.3f, 0.7f), Color.Blue.copy(0.6f)
                         )
-                    })
-            },
+                    ),
+                    shape = RoundedCornerShape(10.dp),
 
-            ) { innerPadding ->
+                    )
+                .width(360.dp), contentAlignment = Alignment.Center
 
+        ) {
             Column(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(Color.White),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
 
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Text(
+                    text = "",
+                    fontSize = 30.sp,
+                    style = TextStyle.Default.copy(
+                        Color.White,
+                    ),
+                    fontWeight = FontWeight.Bold,
 
-                Spacer(modifier = Modifier.height(1.dp))
+                    )
 
-
-
-                Box(
+                AsyncImage(
+                    model = "https://openweathermap.org/img/wn/@2x.png",
+                    contentDescription = null,
                     modifier = Modifier
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Blue.copy(0.7f, 0.3f, 0.7f), Color.Blue.copy(0.6f)
-                                )
-                            ),
-                            shape = RoundedCornerShape(10.dp),
+                        .width(200.dp)
+                        .height(100.dp)
+                        .clip(CircleShape)
+                )
 
-                            )
-                        .width(360.dp), contentAlignment = Alignment.Center
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
 
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxWidth()
-
-                    ) {
-                        Text(
-                            text = "",
-                            fontSize = 30.sp,
-                            style = TextStyle.Default.copy(
-                                Color.White,
-                            ),
-                            fontWeight = FontWeight.Bold,
-
-                            )
-
-                        AsyncImage(
-                            model = "https://openweathermap.org/img/wn/@2x.png",
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(200.dp)
-                                .height(120.dp)
-                                .clip(CircleShape)
-                        )
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center
-
-                        ) {
 
 
-                            Text(
-                                text = "${data?.temp} ºC".take(2),
-                                fontSize = 100.sp,
-                                modifier = Modifier,
-                                style = TextStyle.Default.copy(
-                                    Color.White, fontWeight = FontWeight.ExtraBold
+                    Text(
+                        text = "${data?.temp} ºC".take(2),
+                        fontSize = 100.sp,
+                        modifier = Modifier,
+                        style = TextStyle.Default.copy(
+                            Color.White, fontWeight = FontWeight.ExtraBold
 
-                                ),
-                            )
-
-                        }
-                        Text(
-                            text = "${data?.temp}",
-                            fontSize = 18.sp,
-                            style = TextStyle.Default.copy(
-                                Color.White,
-                            ),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Spacer(modifier = Modifier.height(5.dp))
-
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
-
-                        ) {
-
-                            Text(
-                                text = "Min:",
-                                style = TextStyle.Default.copy(
-                                    Color.White,
-                                ),
-
-                                fontWeight = FontWeight.ExtraBold,
-                                modifier = Modifier.padding(end = 5.dp),
-
-
-                                )
-
-                            Text(
-                                text = "${data?.temp_min} ºC",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-                                modifier = Modifier
-                            )
-
-                            Text(
-                                text = "Max:",
-                                style = TextStyle.Default.copy(
-                                    Color.White,
-                                ),
-                                modifier = Modifier.padding(start = 10.dp, end = 2.dp),
-                                fontWeight = FontWeight.ExtraBold,
-
-
-                                )
-
-                            Text(
-                                text = "${data?.temp_max} ºC",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-
-                                )
-
-
-                            Spacer(modifier = Modifier.width(10.dp))
-
-
-                            Text(
-                                text = "Sensação:",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-                            )
-                            Text(
-                                text = "${data?.feels_like} ºC",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-                                modifier = Modifier.padding(start = 5.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-
-
-                        Row(
-                            modifier = Modifier.padding(bottom = 10.dp)
-                        ) {
-
-                            Image(
-                                painter = painterResource(id = R.drawable.humidity_icon),
-                                contentDescription = "humidity",
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Text(
-                                text = "${data?.humidity} %",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-                                modifier = Modifier.padding(start = 5.dp)
-                            )
-
-                            Spacer(modifier = Modifier.width(10.dp))
-
-                            Image(
-                                painter = painterResource(id = R.drawable.wind_icon),
-                                contentDescription = "umidity",
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Text(
-                                text = "${data?.humidity} km",
-                                color = Color.White,
-                                fontWeight = FontWeight.ExtraBold,
-                                modifier = Modifier.padding(start = 5.dp)
-                            )
-
-
-                        }
-                    }
-
+                        ),
+                    )
 
                 }
+                Text(
+                    text = "${data?.temp}",
+                    fontSize = 18.sp,
+                    style = TextStyle.Default.copy(
+                        Color.White,
+                    ),
+                    fontWeight = FontWeight.Bold
+                )
 
-                Box(
+                Spacer(modifier = Modifier.height(5.dp))
+
+
+                Row(
                     modifier = Modifier
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Blue.copy(0.9f, 0.4f, 0.6f), Color.Blue.copy(0.6f)
-                                )
-                            ),
-                            shape = RoundedCornerShape(10.dp),
-
-                            )
-                        .width(360.dp), contentAlignment = Alignment.Center
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
 
                 ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier.padding(top = 10.dp)
 
-                    ) {
-                        Text(
-                            text = "Previsao para os próximos dias",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                    Text(
+                        text = "Min:",
+                        style = TextStyle.Default.copy(
+                            Color.White,
+                        ),
+
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(end = 5.dp),
+
 
                         )
 
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(45.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        ) {
+                    Text(
+                        text = "${data?.temp_min} ºC",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier
+                    )
 
-                            Text(
-                                text = viewModelForecast.getDayOfTheWeek(dataForDayOne.toString()),
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-
-                            AsyncImage(
-                                model = "https://openweathermap.org/img/wn/$iconTempForDayOne@2x.png",
-                                contentDescription = "sol",
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp)
-                                    .clip(CircleShape)
-                            )
+                    Text(
+                        text = "Max:",
+                        style = TextStyle.Default.copy(
+                            Color.White,
+                        ),
+                        modifier = Modifier.padding(start = 10.dp, end = 2.dp),
+                        fontWeight = FontWeight.ExtraBold,
 
 
-                            Text(
-                                text = tempMinForDayOne.toString().take(2) + "º",
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
+                        )
 
-                            Text(
-                                text = tempMaxForDayOne.toString().take(2) + "º",
-                                style = TextStyle.Default.copy(
-                                    color = Color.White,
-                                )
-                            )
-                        }
-                        Row(
+                    Text(
+                        text = "${data?.temp_max} ºC",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
 
-                            horizontalArrangement = Arrangement.spacedBy(45.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        ) {
-                            Text(
-                                text = viewModelForecast.getDayOfTheWeek(dataForDayTwo.toString()),
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-
-                            AsyncImage(
-                                model = "https://openweathermap.org/img/wn/$iconTempForDayTwo@2x.png",
-                                contentDescription = "sol",
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp)
-                                    .clip(CircleShape)
-                            )
-
-                            Text(
-                                text = tempMinForDayTwo.toString().take(2) + "º",
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-                            Text(
-                                text = tempMaxForDayTwo.toString().take(2) + "º",
-                                style = TextStyle.Default.copy(
-                                    Color.White,
-                                )
-                            )
-                        }
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(45.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        ) {
-                            Text(
-                                text = viewModelForecast.getDayOfTheWeek(dataForDayThree.toString()),
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-
-                            AsyncImage(
-                                model = "https://openweathermap.org/img/wn/$iconTempForDayThree@2x.png",
-                                contentDescription = "sol",
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp)
-                                    .clip(CircleShape)
-
-                            )
-
-                            Text(
-                                text = tempMinForDayThree.toString().take(2) + "º",
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-
-                            Text(
-                                text = tempMaxForDayThree.toString().take(2) + "º",
-                                style = TextStyle.Default.copy(
-                                    Color.White,
-                                )
-                            )
-                        }
-
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(45.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        ) {
-                            Text(
-                                text = viewModelForecast.getDayOfTheWeek(dataForDayFour.toString()),
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
-
-                            AsyncImage(
-                                model = "https://openweathermap.org/img/wn/$iconTempForDayFour@2x.png",
-                                contentDescription = "sol",
-                                modifier = Modifier
-                                    .width(30.dp)
-                                    .height(30.dp)
-                                    .clip(CircleShape)
-                            )
+                        )
 
 
-                            Text(
-                                text = tempMinForDayFour.toString().take(2) + "º",
-                                modifier = Modifier.width(40.dp),
-                                color = Color.White,
-                            )
+                    Spacer(modifier = Modifier.width(10.dp))
 
-                            Text(
-                                text = tempMaxForDayFour.toString().take(2) + "º",
-                                style = TextStyle.Default.copy(
-                                    Color.White,
-                                )
-                            )
-                        }
 
-                        Spacer(modifier = Modifier.height(2.dp))
-                    }
+                    Text(
+                        text = "Sensação:",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
+                    )
+                    Text(
+                        text = "${data?.feels_like} ºC",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(start = 5.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+
+
+                Row(
+                    modifier = Modifier.padding(bottom = 10.dp)
+                ) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.humidity_icon),
+                        contentDescription = "humidity",
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(
+                        text = "${data?.humidity} %",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(start = 5.dp)
+                    )
+
+                    Spacer(modifier = Modifier.width(10.dp))
+
+                    Image(
+                        painter = painterResource(id = R.drawable.wind_icon),
+                        contentDescription = "umidity",
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(
+                        text = "${data?.humidity} km",
+                        color = Color.White,
+                        fontWeight = FontWeight.ExtraBold,
+                        modifier = Modifier.padding(start = 5.dp)
+                    )
+
+
                 }
             }
-        }
 
+
+        }
 
     }
 }
+
+
 @Preview
 @Composable
 fun GreatingPreview() {
 
-    WeatherScreen(state = WeatherState())
+    WeatherCard(state = WeatherState())
 
 }

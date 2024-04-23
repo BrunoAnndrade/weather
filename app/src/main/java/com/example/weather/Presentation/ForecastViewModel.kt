@@ -1,88 +1,60 @@
 package com.example.weather.Presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import com.example.weather.Domain.Repository.ForecastRepository
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weather.Data.Remote.CityForecastDTO
-import com.example.weather.Data.Remote.ListWeatherElementDTO
-import com.example.weather.Data.Remote.RetrofitModule
-import com.example.weather.Data.Remote.WeatherApi
+import com.example.weather.Data.LocationTracker
+import com.example.weather.Domain.Util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import javax.inject.Inject
 
-class ForecastViewModel(
-    private val weatherService: WeatherApi
-) : ViewModel() {
+@HiltViewModel
+class ForecastViewModel @Inject constructor(
+    private val repository: ForecastRepository,
+    private val locationTracker: LocationTracker
+): ViewModel() {
 
-    private val _cityLiveData = MutableLiveData<CityForecastDTO>()
-    val cityLiveData: LiveData<CityForecastDTO> = _cityLiveData
+    var state by mutableStateOf(ForecastState())
+        private set
 
-    private val _listElementLiveData = MutableLiveData<List<ListWeatherElementDTO>>()
-    val listElementLiveData: LiveData<List<ListWeatherElementDTO>> = _listElementLiveData
-
-
-    init {
-        getForecast()
-    }
-
-
-    private fun getForecast() {
+    fun loadWeatherInfo() {
         viewModelScope.launch {
-            try {
-                val lat = -6.98021
-                val lon = -34.8304
-                val forecastResponse = weatherService.fetchForecast(lat, lon, 40)
-
-                _cityLiveData.value = forecastResponse.city
-                _listElementLiveData.value = forecastResponse.list
-
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-    }
-
-
-    // Take date and transform it into a day of week
-    fun getDayOfTheWeek(dtTxt: String): String {
-        try {
-            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-            val date = sdf.parse(dtTxt)
-
-            if (date != null) {
-                val calendar = Calendar.getInstance()
-                calendar.time = date
-                return when (calendar.get(Calendar.DAY_OF_WEEK)) {
-                    1 -> "Dom"
-                    2 -> "Seg"
-                    3 -> "Ter"
-                    4 -> "Qua"
-                    5 -> "Qui"
-                    6 -> "Sex"
-                    7 -> "Sáb"
-                    else -> "Dia inválido"
+            state = state.copy(
+                isLoading = true,
+                error = null
+            )
+            locationTracker.getCurrentLocation()?.let { location ->
+                when(val result = repository.getForecastData(location.latitude, location.longitude)) {
+                    is Resource.Success -> {
+                        state = state.copy(
+                            forecastResponse = result.data,
+                            isLoading = false,
+                            error = null
+                        )
+                    }
+                    is Resource.Error -> {
+                        state = state.copy(
+                            forecastResponse = null,
+                            isLoading = false,
+                            error = result.message
+                        )
+                    }
                 }
-            } else {
-                return "Formato de data inválido"
+            } ?: kotlin.run {
+                state = state.copy(
+                    isLoading = false,
+                    error = "Couldn't retrieve location. Make sure to grant permission and enable GPS."
+                )
             }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            return "Erro"
         }
-    }
-
-    companion object {
-        fun create(): ForecastViewModel {
-            val weatherService = RetrofitModule.createWeatherService()
-            return ForecastViewModel(weatherService)
-
-        }
-
     }
 
 
