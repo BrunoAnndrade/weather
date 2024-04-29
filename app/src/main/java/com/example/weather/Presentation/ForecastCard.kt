@@ -36,6 +36,8 @@ fun ForecastCard(
 
     state.forecastResponse?.list.let { data ->
 
+        println("Tamanho da lista de previsão meteorológica: ${state.forecastResponse}")
+
 
         fun getDayOfTheWeek(dtTxt: String): String {
             try {
@@ -64,36 +66,35 @@ fun ForecastCard(
             }
         }
 
-
-
-
         // each array has 3 hours of differences in API
         // 1 day later
         val oneDayLater = 2
+
         val tempMinForDayOne = data?.get(oneDayLater)?.main?.temp_min ?: 0.0
         val tempMaxForDayOne = data?.get(oneDayLater)?.main?.temp_max
-        val iconTempForDayOne = data?.get(oneDayLater)?.weather?.icon
+        val iconTempForDayOne = data?.get(oneDayLater)?.weather?.get(0)?.icon
         val dataForDayOne = data?.get(oneDayLater)?.dt_txt
+
 
         // 2 days later
         val twoDayLater = 10
         val tempMinForDayTwo = data?.get(twoDayLater)?.main?.temp_min
         val tempMaxForDayTwo = data?.get(twoDayLater)?.main?.temp_max
-        val iconTempForDayTwo = data?.get(twoDayLater)?.weather?.icon
+        val iconTempForDayTwo = data?.get(twoDayLater)?.weather?.get(0)?.icon
         val dataForDayTwo = data?.get(twoDayLater)?.dt_txt
 
         // 3 days later
         val threeDayLater = 18
         val tempMinForDayThree = data?.get(threeDayLater)?.main?.temp_min
         val tempMaxForDayThree = data?.get(threeDayLater)?.main?.temp_max
-        val iconTempForDayThree = data?.get(threeDayLater)?.weather?.icon
+        val iconTempForDayThree = data?.get(threeDayLater)?.weather?.get(0)?.icon
         val dataForDayThree = data?.get(threeDayLater)?.dt_txt
 
         // 4 days later
         val fourDayLater = 26
         val tempMinForDayFour = data?.get(fourDayLater)?.main?.temp_min
         val tempMaxForDayFour = data?.get(fourDayLater)?.main?.temp_max
-        val iconTempForDayFour = data?.get(fourDayLater)?.weather?.icon
+        val iconTempForDayFour = data?.get(fourDayLater)?.weather?.get(0)?.icon
         val dataForDayFour = data?.get(fourDayLater)?.dt_txt
 
         Box(
