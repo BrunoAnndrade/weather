@@ -5,7 +5,8 @@ data class WeatherResponse(
     val id: Int,
     val main: MainWeatherDTO,
     val weather: List<WeatherDTO>,
-    val wind: WindDTO
+    val wind: WindDTO,
+    val name:String,
 )
 
 data class MainWeatherDTO(

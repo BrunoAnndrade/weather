@@ -43,6 +43,11 @@ fun WeatherCard(
 ) {
 
     state.weatherResponse?.main.let { data ->
+        
+        
+        val icon = state.weatherResponse?.weather?.get(0)?.icon
+        val city = state.weatherResponse?.name
+        val description = state.weatherResponse?.weather?.get(0)?.description
 
 
 
@@ -64,11 +69,13 @@ fun WeatherCard(
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
 
             ) {
                 Text(
-                    text = "",
+                    text = "$city",
                     fontSize = 30.sp,
                     style = TextStyle.Default.copy(
                         Color.White,
@@ -78,7 +85,7 @@ fun WeatherCard(
                     )
 
                 AsyncImage(
-                    model = "https://openweathermap.org/img/wn/@2x.png",
+                    model = "https://openweathermap.org/img/wn/${icon}@2x.png",
                     contentDescription = null,
                     modifier = Modifier
                         .width(200.dp)
@@ -94,7 +101,7 @@ fun WeatherCard(
 
 
                     Text(
-                        text = "${data?.temp} ºC".take(2),
+                        text = "${data?.temp}".take(2)+"ºC",
                         fontSize = 100.sp,
                         modifier = Modifier,
                         style = TextStyle.Default.copy(
@@ -105,15 +112,15 @@ fun WeatherCard(
 
                 }
                 Text(
-                    text = "${data?.temp}",
+                    text = "$description".uppercase(),
                     fontSize = 18.sp,
                     style = TextStyle.Default.copy(
                         Color.White,
                     ),
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.ExtraBold
                 )
 
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.padding(bottom = 30.dp))
 
 
                 Row(
@@ -125,7 +132,7 @@ fun WeatherCard(
                 ) {
 
                     Text(
-                        text = "Min:",
+                        text = "MIN:",
                         style = TextStyle.Default.copy(
                             Color.White,
                         ),
@@ -137,14 +144,14 @@ fun WeatherCard(
                         )
 
                     Text(
-                        text = "${data?.temp_min} ºC",
+                        text = "${data?.temp_min}".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                         modifier = Modifier
                     )
 
                     Text(
-                        text = "Max:",
+                        text = "MAX:",
                         style = TextStyle.Default.copy(
                             Color.White,
                         ),
@@ -155,7 +162,7 @@ fun WeatherCard(
                         )
 
                     Text(
-                        text = "${data?.temp_max} ºC",
+                        text = "${data?.temp_max}".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
 
@@ -166,12 +173,12 @@ fun WeatherCard(
 
 
                     Text(
-                        text = "Sensação:",
+                        text = "SENSAÇÃO:",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                     )
                     Text(
-                        text = "${data?.feels_like} ºC",
+                        text = "${data?.feels_like}".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                         modifier = Modifier.padding(start = 5.dp)

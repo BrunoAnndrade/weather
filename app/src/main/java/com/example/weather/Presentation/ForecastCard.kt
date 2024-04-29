@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -69,12 +70,10 @@ fun ForecastCard(
         // each array has 3 hours of differences in API
         // 1 day later
         val oneDayLater = 2
-
-        val tempMinForDayOne = data?.get(oneDayLater)?.main?.temp_min ?: 0.0
+        val tempMinForDayOne = data?.get(oneDayLater)?.main?.temp_min
         val tempMaxForDayOne = data?.get(oneDayLater)?.main?.temp_max
         val iconTempForDayOne = data?.get(oneDayLater)?.weather?.get(0)?.icon
         val dataForDayOne = data?.get(oneDayLater)?.dt_txt
-
 
         // 2 days later
         val twoDayLater = 10
@@ -129,12 +128,13 @@ fun ForecastCard(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(45.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(horizontal = 12.dp)
+                    modifier = Modifier.padding(horizontal = 10.dp)
                 ) {
 
                     Text(
                         text = getDayOfTheWeek(dataForDayOne.toString()),
                         modifier = Modifier.width(40.dp),
+                        fontSize = 18.sp,
                         color = Color.White,
                     )
 
@@ -149,17 +149,22 @@ fun ForecastCard(
 
 
                     Text(
-                        text = "$tempMinForDayOne ºC",
-                        modifier = Modifier.width(40.dp),
+                        text = "$tempMinForDayOne".take(2) + " ºC",
+                        modifier = Modifier.width(60.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     Text(
-                        text = "$tempMaxForDayOne ºC",
+                        text = "$tempMaxForDayOne".take(2) + " ºC",
                         style = TextStyle.Default.copy(
                             color = Color.White,
+
+                            ),
+                        fontSize = 18.sp,
+
+
                         )
-                    )
                 }
                 Row(
 
@@ -171,6 +176,7 @@ fun ForecastCard(
                         text = getDayOfTheWeek(dataForDayTwo.toString()),
                         modifier = Modifier.width(40.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     AsyncImage(
@@ -183,15 +189,17 @@ fun ForecastCard(
                     )
 
                     Text(
-                        text = "$tempMinForDayTwo ºC",
-                        modifier = Modifier.width(40.dp),
+                        text = "$tempMinForDayTwo".take(2) + " ºC",
+                        modifier = Modifier.width(60.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
                     Text(
-                        text = "$tempMaxForDayTwo ºC",
+                        text = "$tempMaxForDayTwo".take(2) + " ºC",
                         style = TextStyle.Default.copy(
                             Color.White,
-                        )
+                        ),
+                        fontSize = 18.sp,
                     )
                 }
                 Row(
@@ -203,6 +211,7 @@ fun ForecastCard(
                         text = getDayOfTheWeek(dataForDayThree.toString()),
                         modifier = Modifier.width(40.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     AsyncImage(
@@ -216,15 +225,17 @@ fun ForecastCard(
                     )
 
                     Text(
-                        text = "$tempMinForDayThree ºC",
-                        modifier = Modifier.width(40.dp),
+                        text = "$tempMinForDayThree".take(2) + " ºC",
+                        modifier = Modifier.width(60.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     Text(
-                        text = "$tempMaxForDayThree ºC",
+                        text = "$tempMaxForDayThree".take(2) + " ºC",
                         style = TextStyle.Default.copy(
                             Color.White,
+                            fontSize = 18.sp,
                         )
                     )
                 }
@@ -238,6 +249,7 @@ fun ForecastCard(
                         text = getDayOfTheWeek(dataForDayFour.toString()),
                         modifier = Modifier.width(40.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     AsyncImage(
@@ -251,19 +263,24 @@ fun ForecastCard(
 
 
                     Text(
-                        text = "$tempMinForDayFour ºC",
-                        modifier = Modifier.width(40.dp),
+                        text = "$tempMinForDayFour".take(2) + " ºC",
+                        modifier = Modifier.width(60.dp),
                         color = Color.White,
+                        fontSize = 18.sp,
                     )
 
                     Text(
-                        text = "$tempMaxForDayFour ºC",
+                        text = "$tempMaxForDayFour".take(2) + " ºC",
                         style = TextStyle.Default.copy(
                             Color.White,
-                        )
+                        ),
+                        fontSize = 18.sp,
                     )
+
+
                 }
 
+                Spacer(modifier = Modifier.height(5.dp))
 
             }
         }

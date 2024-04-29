@@ -81,6 +81,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Column(
                             modifier = Modifier
+                                .padding(top = 10.dp)
 
                                 .fillMaxSize()
                                 .background(Color.White),
