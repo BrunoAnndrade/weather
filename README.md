@@ -1,6 +1,5 @@
 # Weather
-Projeto ralizado para estudos na lingaugem kotlin utilizando jetpack compose, 
-
+Um aplicativo de previsão do tempo intuitivo e preciso para manter você informado sobre as condições climáticas em tempo real.
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
