@@ -3,7 +3,7 @@ Um aplicativo de previsão do tempo intuitivo e preciso para manter você inform
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
-<img src="/result/imagem1.png" width="260">&emsp;
+<img src="/result/imagem1.jpg" width="260">&emsp;
 
 ## Tecnologias
 
