@@ -41,16 +41,15 @@ fun WeatherCard(
     state: WeatherState
 
 ) {
-
     state.weatherResponse?.main.let { data ->
-        
         
         val icon = state.weatherResponse?.weather?.get(0)?.icon
         val city = state.weatherResponse?.name
         val description = state.weatherResponse?.weather?.get(0)?.description
-
-
-
+        val temp = state.weatherResponse?.main?.temp?.toInt()
+        val tempMin = state.weatherResponse?.main?.temp_min?.toInt()
+        val tempMax = state.weatherResponse?.main?.temp_max?.toInt()
+        val feelsLike = state.weatherResponse?.main?.feels_like?.toInt()
 
         Box(
             modifier = Modifier
@@ -101,7 +100,7 @@ fun WeatherCard(
 
 
                     Text(
-                        text = "${data?.temp}".take(2)+"ºC",
+                        text = "$temp".take(2)+"ºC",
                         fontSize = 100.sp,
                         modifier = Modifier,
                         style = TextStyle.Default.copy(
@@ -144,14 +143,14 @@ fun WeatherCard(
                         )
 
                     Text(
-                        text = "${data?.temp_min}".take(2)+" ºC",
+                        text = "$tempMin".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                         modifier = Modifier
                     )
 
                     Text(
-                        text = "MAX:",
+                        text = "MAX: ",
                         style = TextStyle.Default.copy(
                             Color.White,
                         ),
@@ -162,7 +161,7 @@ fun WeatherCard(
                         )
 
                     Text(
-                        text = "${data?.temp_max}".take(2)+" ºC",
+                        text = "$tempMax".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
 
@@ -173,12 +172,12 @@ fun WeatherCard(
 
 
                     Text(
-                        text = "SENSAÇÃO:",
+                        text = "SENSAÇÃO: ",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                     )
                     Text(
-                        text = "${data?.feels_like}".take(2)+" ºC",
+                        text = "$feelsLike".take(2)+" ºC",
                         color = Color.White,
                         fontWeight = FontWeight.ExtraBold,
                         modifier = Modifier.padding(start = 5.dp)
